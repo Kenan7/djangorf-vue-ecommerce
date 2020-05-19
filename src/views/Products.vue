@@ -12,16 +12,18 @@
 
 <script>
 import Products from "@/components/Products";
-import { mapState } from "vuex";
+import storeproducts from "../store/storeproducts";
 
 export default {
   components: {
     Products,
   },
   computed: {
-    ...mapState(["products"]),
+    storeproducts() {
+      return storeproducts.state.storeproducts;
+    },
     isLoaded() {
-      if (this.products.length >= 1) {
+      if (this.storeproducts.length >= 1) {
         console.log(
           "%cReset isLoaded",
           "font-weight: bold; color: white; background: green;"

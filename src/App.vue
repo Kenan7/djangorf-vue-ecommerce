@@ -10,11 +10,12 @@
 <script>
 import Navbar from "./components/Navbar.vue";
 import "@/assets/styles.scss";
+import storeproducts from "./store/storeproducts";
 
 export default {
   components: { Navbar },
   created() {
-    this.$store.dispatch("getProducts");
+    storeproducts.dispatch("getProducts");
     console.log(
       "%cDispatched Action",
       "color: white; background: green; font-weight: bold;"

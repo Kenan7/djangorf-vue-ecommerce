@@ -1,7 +1,7 @@
 <template>
   <div class="columns is-multiline">
     <div
-      v-for="product in products"
+      v-for="product in storeproducts"
       :key="product.id"
       class="column is-2 is-4-mobile"
     >
@@ -20,10 +20,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import storeproducts from "../store/storeproducts";
 export default {
   computed: {
-    ...mapState(["products"]),
+    storeproducts() {
+      return storeproducts.state.storeproducts;
+    },
   },
 };
 </script>

@@ -29,12 +29,23 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item">
+        <div class="navbar-item" v-if="isAuthenticated">
           <div class="buttons">
             <a class="button is-primary">
               <strong>Sign up</strong>
             </a>
-            <a class="button is-light">Log in</a>
+            <router-link class="button is-light" to="/login"
+              >Log in</router-link
+            >
+          </div>
+        </div>
+
+        <div class="navbar-item" v-if="!isAuthenticated">
+          <div class="buttons">
+            <a class="button is-light">{{ username }}</a>
+            <a class="button is-primary">
+              <strong>Log out</strong>
+            </a>
           </div>
         </div>
       </div>
@@ -43,5 +54,8 @@
 </template>
 
 <script>
-export default {};
+import { mapGetters } from "vuex";
+export default {
+  computed: mapGetters("auth", ["isAuthenticated", "username"]),
+};
 </script>
