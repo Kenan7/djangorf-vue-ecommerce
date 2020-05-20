@@ -5,7 +5,7 @@
     </div>
 
     <div v-else>
-      <h1>heyyy! data could not load</h1>
+      loading
     </div>
   </section>
 </template>

@@ -1,33 +1,31 @@
-import Vue from "vue";
-import Vuex from "vuex";
+import product from "../api/product";
 
-// Important attach to instance
-Vue.use(Vuex);
+const state = {
+  storeproducts: [],
+};
 
-export default new Vuex.Store({
-  state: {
-    storeproducts: [],
+const mutations = {
+  SET_PRODUCTS: (state, payload) => {
+    state.storeproducts = payload;
   },
-
-  mutations: {
-    SET_PRODUCTS: (state, payload) => {
-      state.storeproducts = payload;
-      console.log(
-        "%cAction completed",
-        "color: white; background: green; font-weight: bold;"
-      );
-      console.timeLog();
-    },
+};
+const actions = {
+  getProducts({ commit, dispatch }) {
+    return product.fetchProducts
+      .then(({ data }) => commit("SET_PRODUCTS", data))
+      .catch((error) => {
+        const notification = {
+          type: "error",
+          message: "Ürünler gösterilemedi " + error.message,
+        };
+        dispatch("notifications/add", notification, { root: true });
+      });
   },
-  actions: {
-    async getProducts({ commit }) {
-      const response = await fetch("http://127.0.0.1:7000/products/");
-      const products = await response.json();
+};
 
-      // console.dir(repos); not best
-      console.assert(products.length >= 0, "Products not returned");
-
-      commit("SET_PRODUCTS", products);
-    },
-  },
-});
+export default {
+  namespaced: true,
+  state,
+  actions,
+  mutations,
+};

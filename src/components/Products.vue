@@ -27,5 +27,8 @@ export default {
       return storeproducts.state.storeproducts;
     },
   },
+  created() {
+    storeproducts.dispatch("getProducts"); //TODO move this getproduct to home component created section
+  },
 };
 </script>

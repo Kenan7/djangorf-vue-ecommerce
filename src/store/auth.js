@@ -7,11 +7,10 @@ import {
   LOGOUT,
   REMOVE_TOKEN,
   SET_TOKEN,
-  SET_CREDENTIALS,
-  CREDENTIALS_USERNAME,
+  SET_STATE_CREDENTIALS,
 } from "./types";
 
-const TOKEN_STORAGE_KEY = "TOKEN_STORAGE_KEY";
+const USER = "USER";
 const isProduction = process.env.NODE_ENV === "production";
 
 const initialState = {
@@ -27,13 +26,30 @@ const getters = {
 };
 
 const actions = {
-  login({ commit }, { username, password }) {
+  login({ commit, dispatch }, { username, password }) {
     commit(LOGIN_BEGIN);
     return auth
       .login(username, password)
       .then(({ data }) => commit(SET_TOKEN, data.key))
       .then(() => commit(LOGIN_SUCCESS))
-      .catch(() => commit(LOGIN_FAILURE));
+      .then(() => dispatch("get_credentials"))
+      .then(() => {
+        const notification = {
+          type: "success",
+          message: "Giriş başarılı",
+        };
+        dispatch("notifications/add", notification, { root: true });
+      })
+      .catch(
+        () => commit(LOGIN_FAILURE),
+        (error) => {
+          const notification = {
+            type: "error",
+            message: "Giriş yapılamadı " + error.message,
+          };
+          dispatch("notifications/add", notification, { root: true });
+        }
+      );
   },
   logout({ commit }) {
     return auth
@@ -44,11 +60,10 @@ const actions = {
   get_credentials({ commit }) {
     return auth
       .getAccountDetails()
-      .then(({ data }) => commit(SET_CREDENTIALS, data.username));
+      .then(({ data }) => commit(SET_STATE_CREDENTIALS, data));
   },
   initialize({ commit }) {
-    const token = localStorage.getItem(TOKEN_STORAGE_KEY);
-    const username = localStorage.getItem(CREDENTIALS_USERNAME);
+    const token = localStorage.getItem(USER);
 
     if (isProduction && token) {
       commit(REMOVE_TOKEN);
@@ -56,7 +71,6 @@ const actions = {
 
     if (!isProduction && token) {
       commit(SET_TOKEN, token);
-      commit(SET_CREDENTIALS, username);
     }
   },
 };
@@ -79,19 +93,25 @@ const mutations = {
     state.error = false;
   },
   [SET_TOKEN](state, token) {
-    if (!isProduction) localStorage.setItem(TOKEN_STORAGE_KEY, token);
+    if (!isProduction) localStorage.setItem(USER, token);
     session.defaults.headers.Authorization = `Token ${token}`;
     state.token = token;
   },
   [REMOVE_TOKEN](state) {
-    localStorage.removeItem(TOKEN_STORAGE_KEY);
+    localStorage.removeItem(USER);
     delete session.defaults.headers.Authorization;
     state.token = null;
   },
-  [SET_CREDENTIALS](state, username) {
-    localStorage.setItem(CREDENTIALS_USERNAME, username);
-    state.username = username;
+  [SET_STATE_CREDENTIALS](state, data) {
+    state.username = data.email;
   },
+  // [SET_CREDENTIALS](state) {
+  //   const token = localStorage.getItem(USER);
+  //   if (token) {
+  //     session.defaults.headers.Authorization = `Bearer ${token}`;
+  //   }
+  // },
+  // [GET_CREDENTIALS](state) {},
 };
 
 export default {

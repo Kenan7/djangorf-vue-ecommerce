@@ -29,7 +29,7 @@
       </div>
 
       <div class="navbar-end">
-        <div class="navbar-item" v-if="isAuthenticated">
+        <div class="navbar-item" v-if="!isAuthenticated">
           <div class="buttons">
             <a class="button is-primary">
               <strong>Sign up</strong>
@@ -40,12 +40,12 @@
           </div>
         </div>
 
-        <div class="navbar-item" v-if="!isAuthenticated">
+        <div class="navbar-item" v-if="isAuthenticated">
           <div class="buttons">
-            <a class="button is-light">{{ username }}</a>
-            <a class="button is-primary">
+            <a class="button is-light">Hoşgeldin {{ username }}</a>
+            <router-link class="button is-primary" to="/logout">
               <strong>Log out</strong>
-            </a>
+            </router-link>
           </div>
         </div>
       </div>

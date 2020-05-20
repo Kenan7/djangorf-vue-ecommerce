@@ -4,15 +4,17 @@ import Products from "./views/Products.vue";
 import Login from "./views/Login";
 import store from "./store/";
 
-// const requireAuthenticated = (to, from, next) => {
-//   store.dispatch("auth/initialize").then(() => {
-//     if (!store.getters["auth/isAuthenticated"]) {
-//       next("/login");
-//     } else {
-//       next();
-//     }
-//   });
-// };
+// location.reload(true); //TODO will deal with that
+
+const requireAuthenticated = (to, from, next) => {
+  store.dispatch("auth/initialize").then(() => {
+    if (!store.getters["auth/isAuthenticated"]) {
+      next("/login");
+    } else {
+      next("/");
+    }
+  });
+};
 
 const requireUnauthenticated = (to, from, next) => {
   store.dispatch("auth/initialize").then(() => {
@@ -22,6 +24,10 @@ const requireUnauthenticated = (to, from, next) => {
       next();
     }
   });
+};
+
+const redirectLogout = (to, from, next) => {
+  store.dispatch("auth/logout").then(() => next("/"));
 };
 
 Vue.use(Router);
@@ -38,10 +44,8 @@ export default new Router({
     {
       path: "/products",
       name: "products",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: Products,
+      beforeEnter: requireAuthenticated,
     },
     {
       path: "/login",
@@ -49,14 +53,10 @@ export default new Router({
       component: Login,
       beforeEnter: requireUnauthenticated,
     },
-    // {
-    //     path: "/products",
-    //     name: "products",
-    //     // route level code-splitting
-    //     // this generates a separate chunk (about.[hash].js) for this route
-    //     // which is lazy-loaded when the route is visited.
-    //     component: () =>
-    //       import(/* webpackChunkName: "about" */ "./views/Products.vue"),
-    //   },
+
+    {
+      path: "/logout",
+      beforeEnter: redirectLogout,
+    },
   ],
 });
