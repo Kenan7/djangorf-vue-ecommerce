@@ -2,10 +2,17 @@
   <section class="section">
     <div v-if="isLoaded" class="container">
       <Products />
+      <Modal />
     </div>
 
     <div v-else>
-      loading
+      <Spinner
+        size="medium"
+        message="Lütfen bekleyin"
+        speed="0.67"
+        line-fg-color="#fa7c91"
+        line-bg-color="#fff"
+      />
     </div>
   </section>
 </template>
@@ -13,10 +20,14 @@
 <script>
 import Products from "@/components/Products";
 import storeproducts from "../store/storeproducts";
+import Spinner from "vue-simple-spinner";
+import Modal from "@/components/Modal";
 
 export default {
   components: {
     Products,
+    Spinner,
+    Modal,
   },
   computed: {
     storeproducts() {
@@ -24,29 +35,14 @@ export default {
     },
     isLoaded() {
       if (this.storeproducts.length >= 1) {
-        console.log(
-          "%cReset isLoaded",
-          "font-weight: bold; color: white; background: green;"
-        );
         return true;
       } else {
         return false;
       }
     },
   },
-  mounted() {
-    console.log(
-      "%cMOUNTED REPOS",
-      "font-weight: bold; color: white; background: blue;"
-    );
-    console.timeLog();
-  },
-  updated() {
-    console.log(
-      "%cREPOS UPDATED",
-      "font-weight: bold; color: white; background: blue;"
-    );
-    console.timeEnd();
+  created() {
+    this.$store.dispatch("storeproducts/getProducts"); //TODO move this getproduct to home component created section
   },
 };
 </script>

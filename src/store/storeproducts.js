@@ -11,7 +11,8 @@ const mutations = {
 };
 const actions = {
   getProducts({ commit, dispatch }) {
-    return product.fetchProducts
+    return product
+      .fetchProducts()
       .then(({ data }) => commit("SET_PRODUCTS", data))
       .catch((error) => {
         const notification = {

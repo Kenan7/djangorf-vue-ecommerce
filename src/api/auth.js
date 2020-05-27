@@ -10,12 +10,29 @@ export default {
   logout() {
     return session.post("http://127.0.0.1:7000/auth/logout/", {});
   },
-  createAccount(username, password1, password2, email) {
-    return session.post("http://127.0.0.1:7000/registration/", {
-      username,
+  createAccount(
+    email,
+    first_name,
+    last_name,
+    password1,
+    password2,
+    birth_date,
+    tc,
+    province,
+    city,
+    phone_number
+  ) {
+    return session.post("http://127.0.0.1:7000/auth/registration/", {
+      email,
+      first_name,
+      last_name,
       password1,
       password2,
-      email,
+      birth_date,
+      tc,
+      province,
+      city,
+      phone_number,
     });
   },
   changeAccountPassword(password1, password2) {
