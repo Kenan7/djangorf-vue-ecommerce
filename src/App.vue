@@ -1,22 +1,16 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <Navbar />
-      <NotificationContainer />
-    </div>
-    <router-view />
-  </div>
+   <Main />
 </template>
 
 <script>
-import Navbar from "@/components/Navbar.vue";
-import "@/assets/styles.scss";
-import NotificationContainer from "@/components/NotificationContainer";
-import Vue from "vue";
-import vueCountryRegionSelect from "vue-country-region-select";
-Vue.use(vueCountryRegionSelect);
+import Main from "@/components/Main.vue";
 
 export default {
-  components: { Navbar, NotificationContainer },
+   components: { Main },
+   name: "App",
+
+   data: () => ({
+      //
+   })
 };
 </script>
