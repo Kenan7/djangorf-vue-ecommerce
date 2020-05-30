@@ -43,6 +43,19 @@ const actions = {
          });
    },
 
+   getProductsByPage({ commit, dispatch }, page) {
+      return product
+         .fetchProductsByPage(page)
+         .then(({ data }) => commit("SET_PRODUCTS", data))
+         .catch(error => {
+            const notification = {
+               type: "error",
+               message: "Ürünler gösterilemedi " + error.message
+            };
+            dispatch("notifications/add", notification, { root: true });
+         });
+   },
+
    getProductById({ commit, dispatch }, id) {
       return product
          .fetchProductById(id)

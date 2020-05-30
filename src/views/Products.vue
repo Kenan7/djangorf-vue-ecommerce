@@ -3,9 +3,10 @@
       <div class="text-center">
          <v-pagination
             v-model="page"
-            :length="count"
+            :length="totalPages"
             :total-visible="10"
             @next="nextPage"
+            @input="changePage"
          ></v-pagination>
       </div>
       <v-row>
@@ -37,23 +38,14 @@
                   <v-btn color="pink darken-1" text>
                      Daha fazla
                   </v-btn>
-                  <!-- <v-btn>{{ product.id }}</v-btn> -->
-                  <!-- <router-link
-                     :to="{ name: 'product', params: { id: product.id } }"
-                     >{{ product.id }}</router-link
-                  > -->
-                  <!-- <vProductDetailCard
-                     v-model="showDetailDialog"
-                     :key="product.id"
-                  /> -->
                </v-card-actions>
             </v-card>
          </v-col>
-         <v-pagination
+         <!-- <v-pagination
             v-model="page"
             :length="count"
             :total-visible="10"
-         ></v-pagination>
+         ></v-pagination> -->
       </v-row>
 
       <div v-if="!isLoaded">
@@ -83,34 +75,50 @@ export default {
          "count",
          "next",
          "previous"
-      ])
+      ]),
+      totalPages() {
+         if (this.count > 0) {
+            return Math.ceil(this.count / 30);
+         }
+         return 1;
+      }
    },
    created() {
-      this.$store.dispatch("storeproducts/getProducts"); //TODO move this getproduct to home component created section
+      if (this.page === 1) {
+         this.$store.dispatch("storeproducts/getProducts");
+      } else {
+         this.$store.dispatch("storeproducts/getProductsByPage", this.page); //TODO move this getproduct to home component created section
+      }
+   },
+   updated() {
+      this.$store.dispatch("storeproducts/getProductsByPage", this.page);
    },
    data() {
       return { showDetailDialog: false };
    },
    props: {
-      value: {
+      page: {
          type: Number,
          default: 1,
          description: "Pagination value"
       }
    },
    methods: {
-      changePage(item) {
-         this.$emit("input", item);
+      changePage() {
+         this.$emit("input", this.page);
       },
       nextPage() {
-         if (this.value < this.count) {
-            this.$emit("input", this.value + 1);
+         if (this.page < this.count) {
+            this.$emit("input", this.page + 1);
          }
       },
       prevPage() {
-         if (this.value > 1) {
-            this.$emit("input", this.value - 1);
+         if (this.page > 1) {
+            this.$emit("input", this.page - 1);
          }
+      },
+      input(page) {
+         this.$router.push("/products/?page=" + page);
       }
    }
 };
