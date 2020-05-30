@@ -7,6 +7,7 @@
             :total-visible="10"
             @next="nextPage"
             @input="changePage"
+            color="pink darken-1"
          ></v-pagination>
       </div>
       <v-row>
@@ -41,11 +42,15 @@
                </v-card-actions>
             </v-card>
          </v-col>
-         <!-- <v-pagination
+         <v-pagination
             v-model="page"
-            :length="count"
+            :length="totalPages"
             :total-visible="10"
-         ></v-pagination> -->
+            @next="nextPage"
+            @input="changePage"
+            @previous="prevPage"
+            color="pink darken-1"
+         ></v-pagination>
       </v-row>
 
       <div v-if="!isLoaded">
