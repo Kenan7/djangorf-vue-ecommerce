@@ -24,20 +24,20 @@ services:
     env_file:
       - ./.env.prod
 
-    nginx:
-      image: nginx:alpine
-      ports:
-        - "80:80"
-      depends_on:
-        - backend
-      volumes:
-        - ./nginx/prod/prod.conf:/etc/nginx/nginx.conf:ro
-        - django-static:/usr/src/app/static
-      networks:
-        - main
-      build:
-        context: .
-        dockerfile: nginx/dev/Dockerfile
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    volumes:
+      - ./nginx/prod/prod.conf:/etc/nginx/nginx.conf:ro
+      - django-static:/usr/src/app/static
+    networks:
+      - main
+    build:
+      context: .
+      dockerfile: nginx/dev/Dockerfile
 
 volumes:
   django-static:
