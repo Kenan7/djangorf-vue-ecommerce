@@ -31,13 +31,13 @@ services:
     depends_on:
       - backend
     volumes:
-      - ./nginx/prod/prod.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/nginx/prod/prod.conf:/etc/nginx/nginx.conf:ro
       - django-static:/usr/src/app/static
     networks:
       - main
     build:
       context: .
-      dockerfile: nginx/dev/Dockerfile
+      dockerfile: frontend/nginx/prod/Dockerfile
 
 volumes:
   django-static:
