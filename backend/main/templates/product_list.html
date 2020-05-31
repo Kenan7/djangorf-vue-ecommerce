@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block product_list %}
+<section class="section">
+    <div class="container">
+        <div class="columns is-multiline">
+            {% for product in products %}
+            <div class="column is-2 is-4-mobile">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="image">
+                            <img src="{{ product.image.url }}" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">{{ product.title }}</a>
+                    </footer>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock product_list %}
