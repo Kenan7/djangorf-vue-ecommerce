@@ -13,6 +13,6 @@ RUN apk update \
 RUN pip install --upgrade pip
 
 ADD requirements.txt /code/
-RUN RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt -r requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt -r requirements.txt
 COPY scripts/start*.sh /
 ADD . /code/

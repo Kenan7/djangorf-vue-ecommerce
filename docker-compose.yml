@@ -13,7 +13,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: /start_prod.sh
+    command: /scripts/start_prod.sh
     networks:
       - main
     volumes:
