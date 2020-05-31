@@ -1,5 +1,6 @@
 # custom
 secrets.json
+.env.prod
 .vscode/
 *.code-workspace
 media
