@@ -1,5 +1,5 @@
 # build stage
-FROM node:9.11.1-alpine as build-stage
+FROM node:14.3.0-alpine3.10 as build-stage
 WORKDIR /app/
 COPY frontend/package.json /app/
 RUN npm cache verify
@@ -8,7 +8,7 @@ COPY frontend /app/
 RUN npm run build
 
 # production stage
-FROM nginx:1.13.12-alpine as production-stage
+FROM nginx:latest-alpine as production-stage
 COPY frontend/nginx/prod/prod.conf /etc/nginx/nginx.conf
 COPY backend/static /usr/src/app/static/
 COPY --from=build-stage /app/dist /dist/
