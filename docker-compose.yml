@@ -12,7 +12,7 @@ services:
     container_name: backend
     build:
       context: ./backend
-      dockerfile: backend/scripts/prod/Dockerfile
+      dockerfile: Dockerfile
     command: /start_prod.sh
     networks:
       - main
