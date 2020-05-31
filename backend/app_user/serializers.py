@@ -1,7 +1,6 @@
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 from app_user.models import AppUser
-from phonenumber_field.modelfields import PhoneNumberField
 
 
 class AppUserSerializers(serializers.ModelSerializer):
@@ -19,7 +18,7 @@ class CustomRegisterSerializer(RegisterSerializer):
     last_name = serializers.CharField(required=True)
     password1 = serializers.CharField(write_only=True)
     password2 = serializers.CharField(write_only=True)
-    phone_number = PhoneNumberField()
+    phone_number = serializers.CharField()
     birth_date = serializers.DateField()
     province = serializers.CharField()
     city = serializers.CharField()

@@ -2,8 +2,6 @@ from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from main.utils import TimeStampedModel
 
-from phonenumber_field.modelfields import PhoneNumberField
-
 
 class AppUserManager(UserManager):
     def _create_user(self, email, password, **extra_fields):

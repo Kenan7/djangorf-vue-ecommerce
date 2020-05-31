@@ -62,7 +62,6 @@ THIRD_PARTY = [
     'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
-    'phonenumber_field',
 ]
 
 INSTALLED_APPS = BASE + LOCAL + THIRD_PARTY
@@ -104,8 +103,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'db',
+        'PORT': 5432,
     }
 }
 
