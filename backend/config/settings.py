@@ -3,14 +3,14 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 AUTH_USER_MODEL = 'app_user.AppUser'
 
-HOME_TEMPLATE = os.path.join(BASE_DIR, 'main', 'templates')
-AUTH_TEMPLATE = os.path.join(BASE_DIR, 'main', 'templates', 'auth')
+# HOME_TEMPLATE = os.path.join(BASE_DIR, 'main', 'templates')
+# AUTH_TEMPLATE = os.path.join(BASE_DIR, 'main', 'templates', 'auth')
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "client", "dist")]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "client", "dist")]
 
 
 REST_AUTH_REGISTER_SERIALIZERS = {
