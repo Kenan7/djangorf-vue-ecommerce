@@ -16,3 +16,7 @@ ADD requirements.txt /code/
 RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt -r requirements.txt
 COPY scripts/start*.sh /
 ADD . /code/
+CMD ["python3", "backend/manage.py", "collectstatic", "--no-input"]
+CMD ["python3", "backend/manage.py", "makemigrations"]
+CMD ["python3", "backend/manage.py", "migrate", "--no-input"]
+CMD ["gunicorn", "backend.wsgi", "-b", "0.0.0.0:7000"]

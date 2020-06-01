@@ -30,7 +30,7 @@ REST_AUTH_REGISTER_SERIALIZERS = {
 # LIBSASS_OUTPUT_STYLE = 'compressed'
 # STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY", 'foo')
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
