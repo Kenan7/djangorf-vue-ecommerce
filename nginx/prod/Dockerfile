@@ -8,7 +8,7 @@ COPY frontend /app/
 RUN npm run build
 
 # production stage
-FROM nginx:latest-alpine as production-stage
+FROM nginx:1.17.10-alpine as production-stage
 COPY nginx/prod/prod.conf /etc/nginx/nginx.conf
 COPY backend/static /usr/src/app/static/
 COPY --from=build-stage /app/dist /dist/
